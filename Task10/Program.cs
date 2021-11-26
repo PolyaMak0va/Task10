@@ -17,32 +17,35 @@ namespace Task10
         {
             Angle angle = new Angle(20, 10, 20);
             angle.Print();
+            double sumRadians = angle.ToRadians(20, 10, 20);
+            if (sumRadians < 0)
+            {
+                Console.WriteLine("Значения угла введены некорректно, невозможно перевести угол в радианы");
+            }
+            else
+            {
+                Console.WriteLine("Значение угла в радианах равно {0:f6}", sumRadians);
+            }
             Console.ReadKey();
         }
-
     }
     class Angle
     {
         int gradus;
         int minute;
         int second;
-        //public double Radians { get; set; }
 
         public int Gradus
         {
             set
             {
-                if (value >= 0 && value < 180)
+                if (value < 0 || value > 180)
                 {
-                    gradus = value;
-                }
-                else if (value < 0)
-                {
-                    Console.WriteLine("Угол не может быть отрицательным!");
+                    Console.WriteLine("Угол не может быть отрицательным либо больше 180°!");
                 }
                 else
                 {
-                    Console.WriteLine("Угол не должен превышать 180°!");
+                    gradus = value;
                 }
             }
             get
@@ -55,17 +58,13 @@ namespace Task10
         {
             set
             {
-                if (value >= 0 && value < 60)
+                if (value < 0 || value > 60)
                 {
-                    minute = value;
-                }
-                else if (value < 0)
-                {
-                    Console.WriteLine("Минута не может быть отрицательной!");
+                    Console.WriteLine("Минута не может быть отрицательной либо больше 60!");
                 }
                 else
                 {
-                    Console.WriteLine("Минута не может быть больше 60\'!");
+                    minute = value;
                 }
             }
             get
@@ -78,17 +77,13 @@ namespace Task10
         {
             set
             {
-                if (value >= 0 && value < 60)
+                if (value < 0 || value > 60)
                 {
-                    second = value;
-                }
-                else if (value < 0)
-                {
-                    Console.WriteLine("Секунда не может быть отрицательной!");
+                    Console.WriteLine("Секунда не может быть отрицательной либо больше 60\"!");
                 }
                 else
                 {
-                    Console.WriteLine("Секунда не может быть больше 60\"!");
+                    second = value;
                 }
             }
             get
@@ -103,20 +98,18 @@ namespace Task10
             Min = minute;
             Second = second;
         }
-        public double ConvertToRadians(double angle)
+        public double ToRadians(int gradus, int minute, int second)
         {
-            return (Math.PI / 180) * angle;
+            double radians1 = 0;
+            double radians2 = 0;
+            double radians3 = 0;
+            radians1 = (Math.PI / 180) * gradus;
+            radians2 = (Math.PI / (180 * 60)) * minute;
+            return radians1 + radians2 + radians3;
         }
         public void Print()
         {
             Console.WriteLine("Значение угла: {0}°{1}\'{2}\"", Gradus, Min, Second);
         }
     }
-    //public static class NumericExtensions
-    //{
-    //    public static double ToRadians(this double val)
-    //    {
-    //        return (Math.PI / 180) * val;
-    //    }
-    //}
 }
